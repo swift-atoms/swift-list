@@ -1,4 +1,4 @@
-# List Primitives
+# List
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -11,7 +11,7 @@ List-discipline value types for Swift — the `List` namespace and a phantom-typ
 `List<Element>` is an empty generic enum: the shared root namespace every list discipline in the package hangs off. Its first inhabitant is `List.Index`, a phantom-typed position whose element type is baked into the type. An index into a `List<Int>` and an index into a `List<String>` are *different types*, so crossing them is a compile error rather than a silent out-of-bounds bug.
 
 ```swift
-import List_Primitives
+import List
 
 // A position into a List<Int>. The element type travels inside the index type.
 let head: List<Int>.Index = 0
@@ -25,7 +25,7 @@ print(head, next)
 
 The `Element` parameter may be `~Copyable`, so the namespace and its index surface work uniformly for move-only element types as well as ordinary values.
 
-The concrete linked-list discipline — `List.Linked` and its `Bounded`, `Inline`, and `Small` variants — lives in [`swift-list-linked-primitives`](https://github.com/swift-primitives/swift-list-linked-primitives). This package retains the namespace shell so every discipline shares one `List` root and one typed-index vocabulary.
+The concrete linked-list discipline — `List.Linked` and its `Bounded`, `Inline`, and `Small` variants — lives in [`swift-list-linked`](https://github.com/swift-molecules/swift-list-linked). This package retains the namespace shell so every discipline shares one `List` root and one typed-index vocabulary.
 
 ---
 
@@ -33,7 +33,7 @@ The concrete linked-list discipline — `List.Linked` and its `Bounded`, `Inline
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-list-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-list.git", branch: "main")
 ]
 ```
 
@@ -41,7 +41,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "List Primitives", package: "swift-list-primitives"),
+        .product(name: "List", package: "swift-list"),
     ]
 )
 ```
@@ -52,14 +52,14 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-Three library products over a single dependency, `swift-index-primitives`. Import the umbrella `List Primitives` for everything, or a single sub-namespace target to narrow what you pull in.
+Three library products over a single dependency, `swift-index`. Import the umbrella `List` for everything, or a single sub-namespace target to narrow what you pull in.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
 | `List Primitive` | `Sources/List Primitive/` | The root `enum List<Element: ~Copyable>` namespace plus the package's foundational, stdlib-only declarations. Zero external dependencies. |
-| `List Index Primitives` | `Sources/List Index Primitives/` | The `List.Index` typed-index surface, a `List<Element>` typealias for `Index<Element>` from `Index Primitives`. |
-| `List Primitives` | `Sources/List Primitives/` | Umbrella: re-exports the root namespace and every sub-namespace. |
-| `List Primitives Test Support` | `Tests/Support/` | Re-exports the umbrella and the index test-support surface for test consumers. |
+| `List Index` | `Sources/List Index/` | The `List.Index` typed-index surface, a `List<Element>` typealias for `Index<Element>` from `Index`. |
+| `List` | `Sources/List/` | Umbrella: re-exports the root namespace and every sub-namespace. |
+| `List Test Support` | `Tests/Support/` | Re-exports the umbrella and the index test-support surface for test consumers. |
 
 Foundation-free.
 
