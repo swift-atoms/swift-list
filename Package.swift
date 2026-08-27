@@ -12,64 +12,36 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-
-        .library(
-            name: "List Primitive",
-            targets: ["List Primitive"]
-        ),
-
-        .library(
-            name: "List Index",
-            targets: ["List Index"]
-        ),
-
         .library(
             name: "List",
             targets: ["List"]
         ),
         .library(
-            name: "List Test Support",
-            targets: ["List Test Support"]
+            name: "List Standard Library Integration",
+            targets: ["List Standard Library Integration"]
+        ),
+        .library(
+            name: "List Apple Foundation Integration",
+            targets: ["List Apple Foundation Integration"]
         ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-molecules/swift-index.git",
-            branch: "main"
-        )
-    ],
+    dependencies: [],
     targets: [
-
-        .target(
-            name: "List Primitive",
-            dependencies: []
-        ),
-
-        .target(
-            name: "List Index",
-            dependencies: [
-                "List Primitive",
-                .product(name: "Index", package: "swift-index"),
-            ]
-        ),
-
         .target(
             name: "List",
-            dependencies: [
-                "List Primitive",
-                "List Index",
-            ]
+            dependencies: []
         ),
-
         .target(
-            name: "List Test Support",
+            name: "List Standard Library Integration",
+            dependencies: ["List"]
+        ),
+        .target(
+            name: "List Apple Foundation Integration",
             dependencies: [
                 "List",
-                .product(name: "Index Test Support", package: "swift-index"),
-            ],
-            path: "Tests/Support"
+                "List Standard Library Integration",
+            ]
         ),
-
         .testTarget(
             name: "List Tests",
             dependencies: [
