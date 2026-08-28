@@ -1,4 +1,4 @@
-# List
+# List Primitives
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -25,7 +25,7 @@ print(head, next)
 
 The `Element` parameter may be `~Copyable`, so the namespace and its index surface work uniformly for move-only element types as well as ordinary values.
 
-The concrete linked-list discipline — `List.Linked` and its `Bounded`, `Inline`, and `Small` variants — lives in [`swift-list-linked`](https://github.com/swift-molecules/swift-list-linked). This package retains the namespace shell so every discipline shares one `List` root and one typed-index vocabulary.
+The concrete linked-list discipline — `List.Linked` and its `Bounded`, `Inline`, and `Small` variants — lives in [`swift-list-linked`](https://github.com/swift-atoms/swift-list-linked). This package retains the namespace shell so every discipline shares one `List` root and one typed-index vocabulary.
 
 ---
 
@@ -33,7 +33,7 @@ The concrete linked-list discipline — `List.Linked` and its `Bounded`, `Inline
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-list.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-list.git", branch: "main")
 ]
 ```
 
@@ -52,13 +52,13 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-Three library products over a single dependency, `swift-index`. Import the umbrella `List` for everything, or a single sub-namespace target to narrow what you pull in.
+Three library products over a single dependency, `swift-index`. Import the umbrella `List Primitives` for everything, or a single sub-namespace target to narrow what you pull in.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
 | `List Primitive` | `Sources/List Primitive/` | The root `enum List<Element: ~Copyable>` namespace plus the package's foundational, stdlib-only declarations. Zero external dependencies. |
-| `List Index` | `Sources/List Index/` | The `List.Index` typed-index surface, a `List<Element>` typealias for `Index<Element>` from `Index`. |
-| `List` | `Sources/List/` | Umbrella: re-exports the root namespace and every sub-namespace. |
+| `List Index Primitives` | `Sources/List Index Primitives/` | The `List.Index` typed-index surface, a `List<Element>` typealias for `Index<Element>` from `Index Primitives`. |
+| `List Primitives` | `Sources/List Primitives/` | Umbrella: re-exports the root namespace and every sub-namespace. |
 | `List Test Support` | `Tests/Support/` | Re-exports the umbrella and the index test-support surface for test consumers. |
 
 Foundation-free.

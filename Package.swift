@@ -14,11 +14,6 @@ let package = Package(
     products: [
 
         .library(
-            name: "List Primitive",
-            targets: ["List Primitive"]
-        ),
-
-        .library(
             name: "List Index",
             targets: ["List Index"]
         ),
@@ -34,37 +29,29 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-molecules/swift-index.git",
+            url: "https://github.com/swift-atoms/swift-index.git",
             branch: "main"
         )
     ],
     targets: [
 
         .target(
-            name: "List Primitive",
+            name: "List",
             dependencies: []
         ),
 
         .target(
             name: "List Index",
             dependencies: [
-                "List Primitive",
+                .target(name: "List"),
                 .product(name: "Index", package: "swift-index"),
-            ]
-        ),
-
-        .target(
-            name: "List",
-            dependencies: [
-                "List Primitive",
-                "List Index",
             ]
         ),
 
         .target(
             name: "List Test Support",
             dependencies: [
-                "List",
+                .target(name: "List"),
                 .product(name: "Index Test Support", package: "swift-index"),
             ],
             path: "Tests/Support"
@@ -73,7 +60,7 @@ let package = Package(
         .testTarget(
             name: "List Tests",
             dependencies: [
-                "List"
+                .target(name: "List")
             ]
         ),
     ],

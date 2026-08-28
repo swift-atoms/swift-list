@@ -1,5 +1,5 @@
 public import Index
-public import List_Primitive
+public import List
 
 extension List where Element: ~Copyable {
 
