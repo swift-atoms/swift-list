@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-list-primitives",
+    name: "swift-list",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -14,66 +14,53 @@ let package = Package(
     products: [
 
         .library(
-            name: "List Primitive",
-            targets: ["List Primitive"]
+            name: "List Index",
+            targets: ["List Index"]
         ),
 
         .library(
-            name: "List Index Primitives",
-            targets: ["List Index Primitives"]
-        ),
-
-        .library(
-            name: "List Primitives",
-            targets: ["List Primitives"]
+            name: "List",
+            targets: ["List"]
         ),
         .library(
-            name: "List Primitives Test Support",
-            targets: ["List Primitives Test Support"]
+            name: "List Test Support",
+            targets: ["List Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-index-primitives.git",
+            url: "https://github.com/swift-atoms/swift-index.git",
             branch: "main"
         )
     ],
     targets: [
 
         .target(
-            name: "List Primitive",
+            name: "List",
             dependencies: []
         ),
 
         .target(
-            name: "List Index Primitives",
+            name: "List Index",
             dependencies: [
-                "List Primitive",
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                .target(name: "List"),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "List Primitives",
+            name: "List Test Support",
             dependencies: [
-                "List Primitive",
-                "List Index Primitives",
-            ]
-        ),
-
-        .target(
-            name: "List Primitives Test Support",
-            dependencies: [
-                "List Primitives",
-                .product(name: "Index Primitives Test Support", package: "swift-index-primitives"),
+                .target(name: "List"),
+                .product(name: "Index Test Support", package: "swift-index"),
             ],
             path: "Tests/Support"
         ),
 
         .testTarget(
-            name: "List Primitives Tests",
+            name: "List Tests",
             dependencies: [
-                "List Primitives"
+                .target(name: "List")
             ]
         ),
     ],

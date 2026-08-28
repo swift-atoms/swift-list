@@ -1,6 +1,6 @@
 import Testing
 
-@testable import List_Primitives
+@testable import List
 
 @Suite("List")
 struct Tests {
