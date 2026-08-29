@@ -3,5 +3,5 @@ public import List
 
 extension List where Element: ~Copyable {
 
-    public typealias Index = Index.Index<Element>
+    public typealias Index = Index::Index<Element>
 }
