@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "List", targets: ["List"]),
-        .library(name: "List Standard Library Integration", targets: ["List Standard Library Integration"]),
-        .library(name: "List Foundation Library Integration", targets: ["List Foundation Library Integration"]),
+
+        .library(name: "List Foundation Integration", targets: ["List Foundation Integration"]),
         .library(name: "List Test Support", targets: ["List Test Support"]),
     ],
     dependencies: [
@@ -31,20 +31,13 @@ let package = Package(
             ],
             path: "Sources/List"
         ),
+        
         .target(
-            name: "List Standard Library Integration",
+            name: "List Foundation Integration",
             dependencies: [
                 .target(name: "List"),
             ],
-            path: "Sources/List Standard Library Integration"
-        ),
-        .target(
-            name: "List Foundation Library Integration",
-            dependencies: [
-                .target(name: "List"),
-                .target(name: "List Standard Library Integration"),
-            ],
-            path: "Sources/List Foundation Library Integration"
+            path: "Sources/List Foundation Integration"
         ),
         .target(
             name: "List Test Support",
@@ -59,8 +52,7 @@ let package = Package(
             dependencies: [
                 .target(name: "List"),
                 .target(name: "List Test Support"),
-                .target(name: "List Standard Library Integration"),
-                .target(name: "List Foundation Library Integration"),
+                .target(name: "List Foundation Integration"),
             ],
             path: "Tests/List Tests"
         ),
