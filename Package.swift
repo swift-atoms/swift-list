@@ -12,20 +12,10 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-
-        .library(
-            name: "List Index",
-            targets: ["List Index"]
-        ),
-
-        .library(
-            name: "List",
-            targets: ["List"]
-        ),
-        .library(
-            name: "List Test Support",
-            targets: ["List Test Support"]
-        ),
+        .library(name: "List", targets: ["List"]),
+        .library(name: "List Standard Library Integration", targets: ["List Standard Library Integration"]),
+        .library(name: "List Foundation Library Integration", targets: ["List Foundation Library Integration"]),
+        .library(name: "List Test Support", targets: ["List Test Support"]),
     ],
     dependencies: [
         .package(
@@ -34,20 +24,28 @@ let package = Package(
         )
     ],
     targets: [
-
         .target(
             name: "List",
-            dependencies: []
+            dependencies: [
+                .product(name: "Index", package: "swift-index"),
+            ],
+            path: "Sources/List"
         ),
-
         .target(
-            name: "List Index",
+            name: "List Standard Library Integration",
             dependencies: [
                 .target(name: "List"),
-                .product(name: "Index", package: "swift-index"),
-            ]
+            ],
+            path: "Sources/List Standard Library Integration"
         ),
-
+        .target(
+            name: "List Foundation Library Integration",
+            dependencies: [
+                .target(name: "List"),
+                .target(name: "List Standard Library Integration"),
+            ],
+            path: "Sources/List Foundation Library Integration"
+        ),
         .target(
             name: "List Test Support",
             dependencies: [
@@ -56,19 +54,22 @@ let package = Package(
             ],
             path: "Tests/Support"
         ),
-
         .testTarget(
             name: "List Tests",
             dependencies: [
-                .target(name: "List")
-            ]
+                .target(name: "List"),
+                .target(name: "List Test Support"),
+                .target(name: "List Standard Library Integration"),
+                .target(name: "List Foundation Library Integration"),
+            ],
+            path: "Tests/List Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let ecosystem: [SwiftSetting] = [
+for target in package.targets {
+    target.swiftSettings = [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
@@ -76,11 +77,6 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableExperimentalFeature("Lifetimes"),
         .enableUpcomingFeature("InferIsolatedConformances"),
+        .enableExperimentalFeature("RawLayout"),
     ]
-
-    let package: [SwiftSetting] = [
-        .enableExperimentalFeature("RawLayout")
-    ]
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }

@@ -1,5 +1,4 @@
 public import Index
-public import List
 
 extension List where Element: ~Copyable {
 
