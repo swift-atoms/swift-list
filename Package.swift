@@ -24,6 +24,14 @@ let package = Package(
         )
     ],
     targets: [
+        .testTarget(
+            name: "Absorbed swift-list-index Tests",
+            dependencies: [
+                .target(name: "List"),
+                .product(name: "Index", package: "swift-index"),
+            ],
+            path: "Tests/Absorbed swift-list-index"
+        ),
         .target(
             name: "List",
             dependencies: [
@@ -31,7 +39,7 @@ let package = Package(
             ],
             path: "Sources/List"
         ),
-        
+
         .target(
             name: "List Foundation Integration",
             dependencies: [
